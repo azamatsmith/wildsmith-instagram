@@ -1,0 +1,24 @@
+{
+  "name": "wildsmith-instagram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "format": "prettier --trailing-comma es5 --single-quote --write \"*.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^4.0.0",
+    "nodemon": "^1.14.11",
+    "prettier": "^1.10.2"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.12.3"
+  }
+}
