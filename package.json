@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "format": "prettier --trailing-comma es5 --single-quote --write \"*.js\""
+    "format": "prettier --trailing-comma es5 --single-quote --write \"*.js\"",
+    "deploy": "git push heroku master"
   },
-  "author": "",
+  "author": "Matthew Smith",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^4.0.0",
