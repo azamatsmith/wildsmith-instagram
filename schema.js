@@ -8,9 +8,9 @@ const {
   GraphQLList,
 } = graphql;
 
-const API_URI = `https://api.instagram.com/v1/users/self/media/recent/?access_token=${
-  process.env.ACCESS_TOKEN
-}`;
+const getURI = (userId, limit = 5) => (
+  `https://api.instagram.com/v1/users/${userId}/media/recent/?access_token=${process.env.ACCESS_TOKEN}`
+)
 
 const ImageDataType = new GraphQLObjectType({
   name: 'ImageDataType',
@@ -60,10 +60,18 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     photoList: {
       type: new GraphQLList(FeedType),
-      resolve(parentValue, args, req) {
-        return axios.get(API_URI).then(({ data }) => {
-          return data.data;
-        });
+      args: { userId: { type: GraphQLString } },
+      resolve(parentValue, {userId}) {
+        const uri = getURI(userId || 'self');
+        return axios.get(uri)
+        .then(({ data }) => {
+          if (data.data.length) {
+            return data.data.slice(0, 5);
+          }
+        })
+        .catch(err => {
+          throw(err);
+        })
       },
     },
   },
