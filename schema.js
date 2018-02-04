@@ -8,9 +8,10 @@ const {
   GraphQLList,
 } = graphql;
 
-const getURI = (userId, limit = 5) => (
-  `https://api.instagram.com/v1/users/${userId}/media/recent/?access_token=${process.env.ACCESS_TOKEN}`
-)
+const getURI = (userId, limit = 5) =>
+  `https://api.instagram.com/v1/users/${userId}/media/recent/?access_token=${
+    process.env.ACCESS_TOKEN
+  }`;
 
 const ImageDataType = new GraphQLObjectType({
   name: 'ImageDataType',
@@ -61,17 +62,18 @@ const RootQuery = new GraphQLObjectType({
     photoList: {
       type: new GraphQLList(FeedType),
       args: { userId: { type: GraphQLString } },
-      resolve(parentValue, {userId}) {
+      resolve(parentValue, { userId }) {
         const uri = getURI(userId || 'self');
-        return axios.get(uri)
-        .then(({ data }) => {
-          if (data.data.length) {
-            return data.data.slice(0, 5);
-          }
-        })
-        .catch(err => {
-          throw(err);
-        })
+        return axios
+          .get(uri)
+          .then(({ data }) => {
+            if (data.data.length) {
+              return data.data.slice(0, 5);
+            }
+          })
+          .catch(err => {
+            throw err;
+          });
       },
     },
   },

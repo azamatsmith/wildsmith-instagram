@@ -12,13 +12,13 @@ const cors = require('cors');
 const app = express();
 
 // Allow CORS
-app.use(cors())
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 //
 // // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.use(
   '/graphql',
@@ -29,13 +29,14 @@ app.use(
 );
 
 app.post('/contact', (req, res) => {
-  const {body} = req;
-  axios.post(process.env.ZAPIER_URL, body)
-  .then(() => res.json({ success: true}))
-  .catch((err) => {
-    console.log('error', err);
-    res.json({ success: false, error: true})
-  });
+  const { body } = req;
+  axios
+    .post(process.env.ZAPIER_URI, body)
+    .then(() => res.json({ success: true }))
+    .catch(err => {
+      console.log('error', err);
+      res.json({ success: false, error: true });
+    });
 });
 
 app.listen(port, () => {
