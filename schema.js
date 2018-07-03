@@ -69,7 +69,6 @@ const RootQuery = new GraphQLObjectType({
           .get(uri)
           .then(({data}) => {
             if (data.data.length) {
-              console.log(data.data);
               return data.data.slice(0, 6);
             }
           })
