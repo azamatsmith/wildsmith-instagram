@@ -16,43 +16,44 @@ const getURI = (userId, limit = 5) =>
 const ImageDataType = new GraphQLObjectType({
   name: 'ImageDataType',
   fields: {
-    width: { type: GraphQLInt },
-    height: { type: GraphQLInt },
-    url: { type: GraphQLString },
+    width: {type: GraphQLInt},
+    height: {type: GraphQLInt},
+    url: {type: GraphQLString},
   },
 });
 
 const CaptionType = new GraphQLObjectType({
   name: 'CaptionType',
   fields: {
-    id: { type: GraphQLString },
-    text: { type: GraphQLString },
+    id: {type: GraphQLString},
+    text: {type: GraphQLString},
   },
 });
 
 const ImageType = new GraphQLObjectType({
   name: 'ImageType',
   fields: {
-    thumbnail: { type: ImageDataType },
-    low_resolution: { type: ImageDataType },
-    standard_resolution: { type: ImageDataType },
+    thumbnail: {type: ImageDataType},
+    low_resolution: {type: ImageDataType},
+    standard_resolution: {type: ImageDataType},
   },
 });
 
 const FeedType = new GraphQLObjectType({
   name: 'PhotoType',
   fields: {
-    id: { type: GraphQLString },
-    images: { type: ImageType },
-    caption: { type: CaptionType },
-    created_time: { type: GraphQLString },
+    created_time: {type: GraphQLString},
+    id: {type: GraphQLString},
+    images: {type: ImageType},
+    caption: {type: CaptionType},
+    created_time: {type: GraphQLString},
     likes: {
       type: GraphQLInt,
       resolve(parentValue) {
         return parentValue.likes.count;
       },
     },
-    link: { type: GraphQLString },
+    link: {type: GraphQLString},
   },
 });
 
@@ -61,12 +62,12 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     photoList: {
       type: new GraphQLList(FeedType),
-      args: { userId: { type: GraphQLString } },
-      resolve(parentValue, { userId }) {
+      args: {userId: {type: GraphQLString}},
+      resolve(parentValue, {userId}) {
         const uri = getURI(userId || 'self');
         return axios
           .get(uri)
-          .then(({ data }) => {
+          .then(({data}) => {
             if (data.data.length) {
               return data.data.slice(0, 6);
             }
